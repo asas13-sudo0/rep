@@ -1,0 +1,40 @@
+name: Build REPO Photon Cloud Mod
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Check reference DLLs
+        shell: pwsh
+        run: |
+          $required = @("core/BepInEx.dll", "core/0Harmony.dll")
+          foreach ($file in $required) {
+            if (!(Test-Path $file)) {
+              Write-Error "Missing $file. Extract core.rar and commit the required DLL."
+            }
+          }
+
+      - name: Build plugin
+        run: dotnet build RepoPhotonCloudMod/RepoPhotonCloudMod.csproj --configuration Release
+
+      - name: Upload compiled DLL
+        uses: actions/upload-artifact@v4
+        with:
+          name: RepoPhotonCloudMod-DLL
+          path: RepoPhotonCloudMod/bin/Release/net472/RepoPhotonCloudMod.dll
+          if-no-files-found: error
