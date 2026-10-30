@@ -9,8 +9,8 @@
   </PropertyGroup>
   <PropertyGroup>
     <!-- Override these if your game is installed elsewhere. -->
-    <ManagedDir Condition="'$(ManagedDir)' == ''">$(MSBuildProjectDirectory)\..\Managed</ManagedDir>
-    <BepInExCoreDir Condition="'$(BepInExCoreDir)' == ''">$(MSBuildProjectDirectory)\..\core</BepInExCoreDir>
+    <ManagedDir Condition="'$(ManagedDir)' == ''">$(MSBuildProjectDirectory)\Managed</ManagedDir>
+    <BepInExCoreDir Condition="'$(BepInExCoreDir)' == ''">$(MSBuildProjectDirectory)\core</BepInExCoreDir>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="All" />
